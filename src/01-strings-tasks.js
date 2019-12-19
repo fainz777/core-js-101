@@ -202,8 +202,33 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let sqrt = '';
+
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      if (i === 0 && j === 0) {
+        sqrt += '┌';
+      } else if (i === height - 1 && j === 0) {
+        sqrt += '└';
+      } else if (i === 0 && j === width - 1) {
+        sqrt += '┐\n';
+      } else if (i === height - 1 && j === width - 1) {
+        sqrt += '┘\n';
+      } else if (j === 0 || j === width - 1) {
+        sqrt += '│';
+        if (j === width - 1) {
+          sqrt += '\n';
+        }
+      } else if (i === 0 || i === height - 1) {
+        sqrt += '─';
+      } else {
+        sqrt += ' ';
+      }
+    }
+  }
+
+  return sqrt;
 }
 
 
@@ -223,8 +248,18 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const code = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+
+  let newStr = '';
+
+  for (let i = 0; i < str.length; i += 1) {
+    const j = code.indexOf(str[i]);
+    newStr += j === -1 ? str[i] : abc[j];
+  }
+
+  return newStr;
 }
 
 /**
@@ -269,8 +304,15 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cards = [
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+  ];
+
+  return cards.indexOf(value);
 }
 
 
